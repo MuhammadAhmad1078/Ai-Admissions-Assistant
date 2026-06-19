@@ -1,110 +1,216 @@
-# AI Student Admissions Assistant
+# 🎓 AI Student Admissions Assistant
 
-A conversational AI assistant that guides prospective students through program discovery, collects their information naturally, generates a personalized learning roadmap, saves the lead to Airtable CRM, and sends a summary via WhatsApp.
+> An intelligent conversational assistant that guides prospective students through program discovery, collects their information naturally through chat, generates personalized learning roadmaps, saves leads to Airtable CRM, and sends summaries via WhatsApp.
 
----
+<br>
 
-## Files
+## ✨ Features
 
-| File | What it does |
+| Feature | Description |
 |---|---|
-| `server.js` | The Express backend — handles `/chat` requests, calls Gemini AI, writes to Airtable, sends WhatsApp via Twilio |
-| `public/index.html` | The chat frontend — a single HTML page with built-in CSS & JS, no build step needed |
-| `.env` | Your secret API keys (never commit this to Git!) |
-| `.env.example` | A template showing which keys you need — copy it to `.env` and fill in your values |
-| `package.json` | Node.js project config & dependency list |
+| 🤖 **AI-Powered Conversations** | Natural, human-like chat powered by Llama 3.3 70B via Groq — detects English & Roman Urdu automatically |
+| 📋 **Smart Lead Capture** | Gathers student name, phone, interest, experience level, and goals through natural conversation — no rigid forms |
+| 🗺️ **Personalized Roadmaps** | Dynamically generates Module 1–4 + Final Project tailored to each student's background, goals, and experience |
+| 📊 **Airtable CRM Integration** | Automatically saves leads with all collected data + conversation summary to Airtable |
+| 📱 **WhatsApp Notifications** | Sends personalized enrollment summary to the student's WhatsApp via Twilio Sandbox |
+| 🌙 **Modern Dark UI** | Sleek, responsive chat interface with animated typing indicators, gradient bubbles, and a polished design |
+| 🌐 **Bilingual Support** | Detects and responds in English or Roman Urdu (Urdu written in Latin script) seamlessly |
 
----
+<br>
 
-## Setup (Step by Step)
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Backend** | Node.js + Express |
+| **LLM** | Groq API (Llama 3.3 70B Versatile) — free tier |
+| **CRM** | Airtable REST API |
+| **Messaging** | Twilio WhatsApp Sandbox REST API |
+| **Frontend** | Vanilla HTML + CSS + JavaScript (no build step) |
+
+<br>
+
+## 📁 Project Structure
+
+```
+ai-admissions-assistant/
+├── server.js            # Express backend — /chat endpoint, Groq, Airtable, Twilio
+├── public/
+│   └── index.html       # Chat frontend — dark-themed, responsive, animated
+├── .env                 # Your secret API keys (never commit this!)
+├── .env.example         # Template showing which keys you need
+├── .gitignore           # Keeps node_modules & .env out of Git
+├── package.json         # Dependencies & scripts
+└── README.md            # You are here
+```
+
+<br>
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-1. **Install Node.js** — Download from [nodejs.org](https://nodejs.org/) (pick the LTS version). This also installs `npm` (the package manager).
+- **Node.js** (v18+) — Download from [nodejs.org](https://nodejs.org/) (LTS version)
 
-### Step 1: Get Your API Keys
+### 1. Clone & Install
 
-#### Google Gemini API Key
-1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Click **"Create API Key"**
-3. Copy the key — it looks like `AIzaSy...`
-
-#### Airtable API Key + Base ID
-1. Go to [airtable.com](https://airtable.com/) and create a free account
-2. Create a new **Base** (like a database). Name it anything, e.g. "Student Leads"
-3. In your base, create a table (or rename the default one) with these columns:
-   - `Name` (Single line text)
-   - `Phone` (Single line text)
-   - `Email` (Email)
-   - `Interest` (Single line text)
-   - `City` (Single line text)
-   - `Experience Level` (Single line text)
-   - `Course Recommendation` (Long text)
-   - `Conversation Summary` (Long text)
-4. Get your **Personal Access Token**: Go to [airtable.com/create/tokens](https://airtable.com/create/tokens) → Create a token → give it `data.records:write` scope on your base → copy the token
-5. Get your **Base ID**: Open your base in the browser — the URL looks like `https://airtable.com/appXXXXXXXXXXXXXX/...` — the `appXXX...` part is your Base ID
-6. The **Table Name** is whatever you named your table (default is `"Leads"`)
-
-#### Twilio WhatsApp Sandbox
-1. Go to [twilio.com](https://www.twilio.com/) and create a free account
-2. From your [Twilio Console](https://console.twilio.com/), copy your **Account SID** and **Auth Token**
-3. Go to **Messaging → Try it out → Send a WhatsApp message** in the left sidebar
-4. Follow the instructions to join the sandbox (you'll send a message like `join <word>-<word>` from your WhatsApp to the Twilio sandbox number)
-5. The sandbox number is usually `+14155238886` (Twilio will show it)
-6. Your **MY_WHATSAPP_TO** is your own phone number in format `whatsapp:+923001234567`
-
-### Step 2: Configure Environment Variables
-
-Copy the example env file and fill in your keys:
-
-```
-copy .env.example .env
-```
-
-Then open `.env` in any text editor and replace the placeholder values with your actual keys.
-
-### Step 3: Install Dependencies & Run
-
-Open a terminal/command prompt in this project folder and run:
-
-```
+```bash
+git clone https://github.com/YOUR-USERNAME/ai-admissions-assistant.git
+cd ai-admissions-assistant
 npm install
+```
+
+### 2. Set Up API Keys
+
+Copy the environment template and fill in your keys:
+
+```bash
+cp .env.example .env
+```
+
+Then open `.env` and add your keys (see [API Key Setup](#-api-key-setup) below).
+
+### 3. Run
+
+```bash
 npm start
 ```
 
-You should see:
+Open **http://localhost:3000** in your browser — start chatting! 🎉
+
+<br>
+
+## 🔑 API Key Setup
+
+### Groq API Key (Free — No Credit Card)
+
+1. Go to [console.groq.com](https://console.groq.com/) → sign up with Google
+2. Navigate to [console.groq.com/keys](https://console.groq.com/keys)
+3. Click **"Create API Key"** → copy it (starts with `gsk_...`)
+
+### Airtable (CRM)
+
+1. Create a free account at [airtable.com](https://airtable.com/)
+2. Create a new Base → rename the default table to **`Leads`**
+3. Add these columns:
+
+   | Column Name | Type |
+   |---|---|
+   | `Name` | Single line text |
+   | `Phone` | Single line text |
+   | `Email` | Email |
+   | `Interest` | Single line text |
+   | `City` | Single line text |
+   | `Experience Level` | Single line text |
+   | `Course Recommendation` | Long text |
+   | `Conversation Summary` | Long text |
+
+4. Get your **Personal Access Token**: [airtable.com/create/tokens](https://airtable.com/create/tokens) → create token with `data.records:write` scope
+5. Get your **Base ID**: from the URL when your base is open — it's the `appXXX...` part
+
+### Twilio WhatsApp Sandbox
+
+1. Create a free account at [twilio.com](https://www.twilio.com/)
+2. From the [Console Dashboard](https://console.twilio.com/), copy your **Account SID** (`AC...`) and **Auth Token** (click the eye icon 👁️)
+3. Go to **Messaging → Try it out → Send a WhatsApp message**
+4. Join the sandbox by sending the provided code (e.g., `join hungry-cat`) from your WhatsApp to `+14155238886`
+
+<br>
+
+## ⚙️ Environment Variables
+
+| Variable | Example | Description |
+|---|---|---|
+| `GROQ_API_KEY` | `gsk_abc123...` | Your Groq API key |
+| `AIRTABLE_API_KEY` | `patXyz789...` | Airtable Personal Access Token |
+| `AIRTABLE_BASE_ID` | `appABC123` | Found in your Airtable base URL |
+| `AIRTABLE_TABLE_NAME` | `Leads` | Must match your table name exactly |
+| `TWILIO_ACCOUNT_SID` | `AC1a2b3c...` | From Twilio Console dashboard |
+| `TWILIO_AUTH_TOKEN` | `xyz789...` | From Twilio Console (click eye icon) |
+| `TWILIO_WHATSAPP_FROM` | `whatsapp:+14155238886` | Twilio sandbox number |
+| `MY_WHATSAPP_TO` | `whatsapp:+923001234567` | Your WhatsApp number for testing |
+
+<br>
+
+## 🔄 How It Works
+
 ```
-✅ Admissions Assistant server running at http://localhost:3000
+┌──────────────┐     POST /chat      ┌──────────────┐     API Call     ┌──────────────┐
+│              │ ──────────────────→  │              │ ──────────────→  │              │
+│   Frontend   │  { sessionId, msg } │   Express    │  conversation   │   Groq API   │
+│   (Chat UI)  │ ←──────────────────  │   Backend    │  history +      │  (Llama 3.3) │
+│              │    { reply }         │              │ ←────────────── │              │
+└──────────────┘                      └──────┬───────┘   AI response   └──────────────┘
+                                             │
+                              ┌──────────────┼──────────────┐
+                              │  On lead_complete JSON:     │
+                              │                             │
+                        ┌─────▼─────┐               ┌──────▼──────┐
+                        │  Airtable │               │   Twilio    │
+                        │  (Save    │               │  (WhatsApp  │
+                        │   Lead)   │               │   Message)  │
+                        └───────────┘               └─────────────┘
 ```
 
-### Step 4: Open the Chat
+1. Student types a message in the chat UI
+2. Frontend sends it to `POST /chat` on the backend
+3. Backend appends it to session history and calls Groq with the system prompt
+4. The AI replies naturally, gathering information through conversation
+5. Once name + phone + interest are collected (with enough context), the AI outputs a structured JSON
+6. Backend detects the JSON and:
+   - ✅ Saves the lead to **Airtable**
+   - 📱 Sends a personalized summary to **WhatsApp** via Twilio
+   - 🗺️ Shows the student their **personalized roadmap** in the chat
 
-Open your browser and go to: **http://localhost:3000**
+<br>
 
-That's it! Start chatting with the assistant.
+## 🧠 System Prompt Highlights
 
----
+The system prompt is the core of this project (~120 lines). Key capabilities:
 
-## How It Works
+- **Language Detection** — Automatically detects English vs Roman Urdu and responds accordingly
+- **Natural Flow** — Discovers interests, goals, and experience through conversation, not forms
+- **Edge Case Handling** — Gracefully handles gibberish, off-topic questions, refusals, and mixed languages
+- **Dynamic Roadmaps** — Two students with the same interest get different roadmaps based on their unique background
+- **Structured Output** — Outputs a strict JSON schema only when all required data is collected
 
-1. You type a message in the chat window
-2. The frontend sends it to `POST /chat` on the backend
-3. The backend adds it to the conversation history and calls the Gemini API with a detailed system prompt
-4. Gemini replies as a friendly admissions counselor, naturally gathering student information
-5. Once it has the student's name, phone, and interest (+ enough context), Gemini outputs a structured JSON with a personalized roadmap
-6. The backend detects this JSON and:
-   - Saves the lead to Airtable
-   - Sends a personalized WhatsApp message via Twilio
-   - Shows the student a success message + their roadmap in the chat
+<br>
 
----
+## 🌐 Deployment
 
-## Troubleshooting
+This app can be deployed for free on **[Render.com](https://render.com/)**:
+
+1. Push your code to GitHub
+2. Create a new **Web Service** on Render → connect your repo
+3. Set **Build Command**: `npm install` | **Start Command**: `node server.js`
+4. Add all environment variables from your `.env` in Render's dashboard
+5. Deploy — your app will be live at `https://your-app.onrender.com`
+
+> **Note:** Free tier sleeps after 15 min of inactivity. First visit after sleep takes ~30s to wake up.
+
+<br>
+
+## 🛠️ Troubleshooting
 
 | Problem | Solution |
 |---|---|
-| `MODULE_NOT_FOUND` error | Run `npm install` again |
-| "Cannot connect to server" in chat | Make sure the server is running (`npm start`) |
-| Gemini returns errors | Check your `GEMINI_API_KEY` in `.env` is correct |
-| Airtable error in console | Verify Base ID, Table Name, and that column names match exactly |
-| WhatsApp not received | Make sure you've joined the Twilio sandbox first, and your number format includes `whatsapp:+` prefix |
+| `MODULE_NOT_FOUND` | Run `npm install` again |
+| "Can't connect to server" in chat | Make sure server is running (`npm start`) |
+| Groq API errors in console | Verify `GROQ_API_KEY` in `.env` is correct |
+| Airtable errors | Check Base ID, Table Name, and that column names match exactly |
+| WhatsApp not received | Make sure you've joined the Twilio sandbox first |
+| Port already in use | Another instance is running — close it or use a different port: `PORT=3001 npm start` |
+
+<br>
+
+## 📄 License
+
+MIT — feel free to use, modify, and distribute.
+
+<br>
+
+---
+
+<p align="center">
+  Built with ❤️ using Node.js, Groq AI, Airtable, and Twilio
+</p>
