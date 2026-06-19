@@ -233,10 +233,12 @@ async function sendWhatsApp(messageBody) {
 // ─── Try to parse LLM response as lead JSON ─────────────────
 function tryParseLeadJSON(text) {
   try {
-    // Strip markdown code fences if the model wraps the JSON
     let cleaned = text.trim();
-    if (cleaned.startsWith("```")) {
-      cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+    // Use regex to locate a JSON object { ... } within the text
+    // This handles cases where the LLM writes text before/after the JSON block
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      cleaned = jsonMatch[0];
     }
     const parsed = JSON.parse(cleaned);
     if (parsed && parsed.lead_complete === true && parsed.name && parsed.phone && parsed.interest) {
